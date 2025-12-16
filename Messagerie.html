@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRCC Webmail - mail.srcc.cm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            min-height: 600px;
+        }
+
+        .left-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 40px;
+            color: white;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #667eea;
+        }
+
+        .welcome-text h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .features {
+            margin-top: 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-header {
+            margin-bottom: 40px;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .forgot-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .domain-info {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .domain-url {
+            color: #667eea;
+            font-weight: 600;
+            margin-top: 5px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                padding: 40px 30px;
+            }
+
+            .right-panel {
+                padding: 40px 30px;
+            }
+
+            .welcome-text h1 {
+                font-size: 28px;
+            }
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="logo">
+                <div class="logo-icon">📧</div>
+                <span>SRCC Mail</span>
+            </div>
+            
+            <div class="welcome-text">
+                <h1>Bienvenue sur votre messagerie professionnelle</h1>
+                <p>Accédez à tous vos emails de manière sécurisée depuis n'importe où.</p>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <div>
+                        <strong>Sécurisé</strong><br>
+                        <small>Connexion cryptée SSL/TLS</small>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌐</div>
+                    <div>
+                        <strong>Accessible partout</strong><br>
+                        <small>Sur tous vos appareils</small>
+                    </div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div>
+                        <strong>Rapide et fiable</strong><br>
+                        <small>Performance optimale</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="login-header">
+                <h2>Connexion</h2>
+                <p>Entrez vos identifiants pour accéder à votre messagerie</p>
+            </div>
+
+            <div id="alert" class="alert"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Adresse email</label>
+                    <input type="email" id="email" name="email" placeholder="utilisateur@srcc.cm" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="options">
+                    <div class="remember">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember" style="margin: 0; font-weight: normal;">Se souvenir de moi</label>
+                    </div>
+                    <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+                </div>
+
+                <button type="submit" class="btn-login">Se connecter</button>
+            </form>
+
+            <div class="domain-info">
+                Service de messagerie SRCC
+                <span class="domain-url">mail.srcc.cm</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const alert = document.getElementById('alert');
+            
+            // Simulation de connexion (à remplacer par une vraie authentification)
+            if (email && password) {
+                alert.className = 'alert alert-success';
+                alert.textContent = 'Connexion en cours...';
+                alert.style.display = 'block';
+                
+                // Simuler un délai de connexion
+                setTimeout(() => {
+                    alert.textContent = 'Connexion réussie ! Redirection vers votre boîte mail...';
+                    // Ici, vous redirigeriez vers l'interface de messagerie réelle
+                    // window.location.href = '/webmail';
+                }, 1000);
+            } else {
+                alert.className = 'alert alert-error';
+                alert.textContent = 'Veuillez remplir tous les champs.';
+                alert.style.display = 'block';
+            }
+        });
+
+        // Cacher l'alerte après 5 secondes
+        setInterval(() => {
+            const alert = document.getElementById('alert');
+            if (alert.style.display === 'block') {
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 5000);
+            }
+        }, 100);
+    </script>
+</body>
+</html>
